@@ -181,12 +181,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84F872971CEF04D600C4B126 /* Build configuration list for PBXNativeTarget "LMLiveStreaming" */;
 			buildPhases = (
-				2BB4B39B7F92E93D9517DA3F /* 📦 Check Pods Manifest.lock */,
+				2BB4B39B7F92E93D9517DA3F /* [CP] Check Pods Manifest.lock */,
 				84F872661CEF04D600C4B126 /* Sources */,
 				84F872671CEF04D600C4B126 /* Frameworks */,
 				84F872681CEF04D600C4B126 /* Resources */,
-				C5801644871121F7717A135E /* 📦 Embed Pods Frameworks */,
-				952A29A65C589D79C9D4AB1F /* 📦 Copy Pods Resources */,
+				C5801644871121F7717A135E /* [CP] Embed Pods Frameworks */,
+				952A29A65C589D79C9D4AB1F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -208,6 +208,7 @@
 				TargetAttributes = {
 					84F872691CEF04D600C4B126 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 24QRT43Q7U;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -256,14 +257,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2BB4B39B7F92E93D9517DA3F /* 📦 Check Pods Manifest.lock */ = {
+		2BB4B39B7F92E93D9517DA3F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,14 +272,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		952A29A65C589D79C9D4AB1F /* 📦 Copy Pods Resources */ = {
+		952A29A65C589D79C9D4AB1F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,14 +287,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LMLiveStreaming/Pods-LMLiveStreaming-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C5801644871121F7717A135E /* 📦 Embed Pods Frameworks */ = {
+		C5801644871121F7717A135E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,14 +432,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FEFF595171B166A12E2181CD /* Pods-LMLiveStreaming.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LMLiveStreaming/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.live.streaming;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mcw.streaming-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -448,14 +448,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7926D4A194E142F8A2F2B54E /* Pods-LMLiveStreaming.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LMLiveStreaming/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.live.streaming;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mcw.streaming-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

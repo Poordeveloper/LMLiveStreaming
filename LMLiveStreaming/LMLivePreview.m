@@ -9,7 +9,9 @@
 #import "LMLivePreview.h"
 #import "UIControl+YYAdd.h"
 #import "UIView+YYAdd.h"
-#import "LFLiveSession.h"
+#import "LFLiveKit/LFLiveSession.h"
+
+int buttonsShown = 1;
 
 @interface LMLivePreview ()<LFLiveSessionDelegate>
 
@@ -21,6 +23,9 @@
 @property (nonatomic, strong) LFLiveDebug *debugInfo;
 @property (nonatomic, strong) LFLiveSession *session;
 @property (nonatomic, strong) UILabel *stateLabel;
+@property (nonatomic, strong) UILabel *nullLabel;
+@property (nonatomic, strong) UITextField *urlInput;
+
 
 @end
 
@@ -31,12 +36,17 @@
         self.backgroundColor = [UIColor clearColor];
         [self requestAccessForVideo];
         [self requestAccessForAudio];
+        [self addSubview:[[UILabel alloc] initWithFrame:self.bounds]]; // to make uiview clickable
         [self addSubview:self.containerView];
-        [self.containerView addSubview:self.stateLabel];
+        [self.containerView addSubview:self.urlInput];
+        [self addSubview:self.stateLabel];
         [self.containerView addSubview:self.closeButton];
         [self.containerView addSubview:self.cameraButton];
         [self.containerView addSubview:self.beautyButton];
         [self.containerView addSubview:self.startLiveButton];
+        UITapGestureRecognizer *singleTap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(toggleButtons)];
+        [self.containerView addGestureRecognizer:singleTap];
+        _urlInput.delegate = self;
     }
     return self;
 }
@@ -74,6 +84,12 @@
     }
 }
 
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
 - (void)requestAccessForAudio{
     AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
     switch (status) {
@@ -107,9 +123,11 @@
             break;
         case LFLiveStart:
             _stateLabel.text = @"已连接";
+            [self toggleButtons];
             break;
         case LFLiveError:
             _stateLabel.text = @"连接错误";
+            [self toggle:FALSE];
             break;
         case LFLiveStop:
             _stateLabel.text = @"未连接";
@@ -139,8 +157,9 @@
         
         
         /***   默认分辨率368 ＊ 640  音频：44.1 iphone6以上48  双声道  方向竖屏 ***/
-        
+        /*
         _session = [[LFLiveSession alloc] initWithAudioConfiguration:[LFLiveAudioConfiguration defaultConfiguration] videoConfiguration:[LFLiveVideoConfiguration defaultConfigurationForQuality:LFLiveVideoQuality_Medium2 landscape:NO]];
+         */
         
         
         /**    自己定制单声道  */
@@ -207,7 +226,7 @@
         
         /**    自己定制高质量音频128K 分辨率设置为720*1280 方向横屏  */
         
-        /*
+        
          LFLiveAudioConfiguration *audioConfiguration = [LFLiveAudioConfiguration new];
          audioConfiguration.numberOfChannels = 2;
          audioConfiguration.audioBitrate = LFLiveAudioBitRate_128Kbps;
@@ -224,7 +243,7 @@
          videoConfiguration.sessionPreset = LFCaptureSessionPreset720x1280;
          
          _session = [[LFLiveSession alloc] initWithAudioConfiguration:audioConfiguration videoConfiguration:videoConfiguration];
-         */
+         
         
         _session.delegate = self;
         _session.preView = self;
@@ -246,10 +265,27 @@
     if(!_stateLabel){
         _stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 80, 40)];
         _stateLabel.text = @"未连接";
-        _stateLabel.textColor = [UIColor whiteColor];
+        _stateLabel.textColor = [UIColor redColor];
         _stateLabel.font = [UIFont boldSystemFontOfSize:14.f];
     }
     return _stateLabel;
+}
+
+- (UITextField*)urlInput{
+    if(!_urlInput){
+        CGRect someRect = CGRectMake(10, 60, self.width - 20, 30.0);
+        _urlInput = [[UITextField alloc] initWithFrame:someRect];
+        _urlInput.borderStyle = UITextBorderStyleRoundedRect;
+        _urlInput.font = [UIFont systemFontOfSize:15];
+        _urlInput.placeholder = @"url";
+        _urlInput.autocorrectionType = UITextAutocorrectionTypeNo;
+        _urlInput.keyboardType = UIKeyboardTypeDefault;
+        _urlInput.returnKeyType = UIReturnKeyDone;
+        _urlInput.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _urlInput.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _urlInput.delegate = self;
+    }
+    return _urlInput;
 }
 
 - (UIButton*)closeButton{
@@ -261,7 +297,7 @@
         [_closeButton setImage:[UIImage imageNamed:@"close_preview"] forState:UIControlStateNormal];
         _closeButton.exclusiveTouch = YES;
         [_closeButton addBlockForControlEvents:UIControlEventTouchUpInside block:^(id sender) {
-            
+            [self toggle: TRUE];
         }];
     }
     return _closeButton;
@@ -305,7 +341,7 @@
         _startLiveButton = [UIButton new];
         _startLiveButton.size = CGSizeMake(self.width - 60, 44);
         _startLiveButton.left = 30;
-        _startLiveButton.bottom = self.height - 50;
+        _startLiveButton.bottom = self.height - 40;
         _startLiveButton.layer.cornerRadius = _startLiveButton.height/2;
         [_startLiveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_startLiveButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
@@ -314,20 +350,31 @@
         _startLiveButton.exclusiveTouch = YES;
         __weak typeof(self) _self = self;
         [_startLiveButton addBlockForControlEvents:UIControlEventTouchUpInside block:^(id sender) {
-            _self.startLiveButton.selected = !_self.startLiveButton.selected;
-            if(_self.startLiveButton.selected){
-                [_self.startLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
-                LFLiveStreamInfo *stream = [LFLiveStreamInfo new];
-                stream.url = @"rtmp://live.hkstv.hk.lxdns.com:1935/live/stream799";
-                //stream.url = @"rtmp://daniulive.com:1935/live/stream2399";
-                [_self.session startLive:stream];
-            }else{
-                [_self.startLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
-                [_self.session stopLive];
-            }
+            [_self toggle:TRUE];
         }];
     }
     return _startLiveButton;
+}
+
+-(void)toggle:(BOOL)action {
+    self.startLiveButton.selected = !self.startLiveButton.selected;
+    if(self.startLiveButton.selected){
+        [self.startLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
+        LFLiveStreamInfo *stream = [LFLiveStreamInfo new];
+        stream.url = self.urlInput.text;
+        //stream.url = @"rtmp://daniulive.com:1935/live/stream2399";
+        if (action)[self.session startLive:stream];
+    }else{
+        [self.startLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
+        if (action)[self.session stopLive];
+    }
+
+}
+
+-(void)toggleButtons{
+    [self endEditing: true]; // to hide keyboard
+    buttonsShown = !buttonsShown;
+    [self.containerView.subviews setValue:buttonsShown ? @NO : @YES forKeyPath:@"hidden"];
 }
 
 @end
