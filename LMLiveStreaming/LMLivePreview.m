@@ -19,7 +19,6 @@ int buttonsShown = 1;
 
 @property (nonatomic, strong) UIButton *beautyButton;
 @property (nonatomic, strong) UIButton *cameraButton;
-@property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UIButton *startLiveButton;
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) LFLiveDebug *debugInfo;
@@ -42,7 +41,6 @@ int buttonsShown = 1;
         [self addSubview:self.containerView];
         [self.containerView addSubview:self.urlInput];
         [self addSubview:self.stateLabel];
-        [self.containerView addSubview:self.closeButton];
         [self.containerView addSubview:self.cameraButton];
         [self.containerView addSubview:self.beautyButton];
         [self.containerView addSubview:self.startLiveButton];
@@ -183,7 +181,7 @@ int buttonsShown = 1;
     if(!_containerView){
         _containerView = [UIView new];
         _containerView.frame = self.bounds;
-        _containerView.backgroundColor = [UIColor clearColor];
+        _containerView.backgroundColor = [UIColor colorWithRed:0. green:0.39 blue:0.106 alpha: 0.4];
         _containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     return _containerView;
@@ -191,7 +189,7 @@ int buttonsShown = 1;
 
 - (UILabel*)stateLabel{
     if(!_stateLabel){
-        _stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 80, 40)];
+        _stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 80, 40)];
         _stateLabel.text = @"未连接";
         _stateLabel.textColor = [UIColor redColor];
         _stateLabel.font = [UIFont boldSystemFontOfSize:14.f];
@@ -201,7 +199,7 @@ int buttonsShown = 1;
 
 - (UITextField*)urlInput{
     if(!_urlInput){
-        CGRect someRect = CGRectMake(10, 60, self.width - 20, 30.0);
+        CGRect someRect = CGRectMake(50, self.height / 4, self.width - 100, 30.0);
         _urlInput = [[UITextField alloc] initWithFrame:someRect];
         _urlInput.borderStyle = UITextBorderStyleRoundedRect;
         _urlInput.font = [UIFont systemFontOfSize:15];
@@ -216,26 +214,11 @@ int buttonsShown = 1;
     return _urlInput;
 }
 
-- (UIButton*)closeButton{
-    if(!_closeButton){
-        _closeButton = [UIButton new];
-        _closeButton.size = CGSizeMake(44, 44);
-        _closeButton.left = self.width - 10 - _closeButton.width;
-        _closeButton.top = 20;
-        [_closeButton setImage:[UIImage imageNamed:@"close_preview"] forState:UIControlStateNormal];
-        _closeButton.exclusiveTouch = YES;
-        [_closeButton addBlockForControlEvents:UIControlEventTouchUpInside block:^(id sender) {
-            [self toggle: TRUE];
-        }];
-    }
-    return _closeButton;
-}
-
 - (UIButton*)cameraButton{
     if(!_cameraButton){
         _cameraButton = [UIButton new];
         _cameraButton.size = CGSizeMake(44, 44);
-        _cameraButton.origin = CGPointMake(_closeButton.left - 10 - _cameraButton.width, 20);
+        _cameraButton.origin = CGPointMake(self.width - 10 - _cameraButton.width, 0);
         [_cameraButton setImage:[UIImage imageNamed:@"camra_preview"] forState:UIControlStateNormal];
         _cameraButton.exclusiveTouch = YES;
         __weak typeof(self) _self = self;
@@ -251,7 +234,7 @@ int buttonsShown = 1;
     if(!_beautyButton){
         _beautyButton = [UIButton new];
         _beautyButton.size = CGSizeMake(44, 44);
-        _beautyButton.origin = CGPointMake(_cameraButton.left - 10 - _beautyButton.width,20);
+        _beautyButton.origin = CGPointMake(_cameraButton.left - 10 - _beautyButton.width,0);
         [_beautyButton setImage:[UIImage imageNamed:@"camra_beauty"] forState:UIControlStateSelected];
         [_beautyButton setImage:[UIImage imageNamed:@"camra_beauty_close"] forState:UIControlStateNormal];
         _beautyButton.exclusiveTouch = YES;
@@ -267,9 +250,9 @@ int buttonsShown = 1;
 - (UIButton*)startLiveButton{
     if(!_startLiveButton){
         _startLiveButton = [UIButton new];
-        _startLiveButton.size = CGSizeMake(self.width - 60, 44);
-        _startLiveButton.left = 30;
-        _startLiveButton.bottom = self.height - 40;
+        _startLiveButton.size = CGSizeMake(100, 36);
+        _startLiveButton.left = (self.width - 100) / 2;
+        _startLiveButton.top = self.height / 2;
         _startLiveButton.layer.cornerRadius = _startLiveButton.height/2;
         [_startLiveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_startLiveButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
@@ -302,6 +285,10 @@ int buttonsShown = 1;
 -(void)toggleButtons{
     [self endEditing: true]; // to hide keyboard
     buttonsShown = !buttonsShown;
+    if (buttonsShown)
+        _containerView.backgroundColor = [UIColor colorWithRed:0. green:0.39 blue:0.106 alpha: 0.4];
+    else
+        _containerView.backgroundColor = [UIColor clearColor];
     [self.containerView.subviews setValue:buttonsShown ? @NO : @YES forKeyPath:@"hidden"];
 }
 
