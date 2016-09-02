@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E0D605D1D7922D200407707 /* Icon-167.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0D605C1D7922D200407707 /* Icon-167.png */; };
 		7EE84FF01D785D1500BE49D1 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE84FE11D785D1500BE49D1 /* Icon-29.png */; };
 		7EE84FF11D785D1500BE49D1 /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE84FE21D785D1500BE49D1 /* Icon-40.png */; };
 		7EE84FF21D785D1500BE49D1 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EE84FE31D785D1500BE49D1 /* Icon-50.png */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		7926D4A194E142F8A2F2B54E /* Pods-LMLiveStreaming.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LMLiveStreaming.release.xcconfig"; path = "Pods/Target Support Files/Pods-LMLiveStreaming/Pods-LMLiveStreaming.release.xcconfig"; sourceTree = "<group>"; };
+		7E0D605C1D7922D200407707 /* Icon-167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-167.png"; path = "../Desktop/iOS/Icon-167.png"; sourceTree = "<group>"; };
 		7EE84FE11D785D1500BE49D1 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-29.png"; path = "LMLiveStreaming/Icons/Icon-29.png"; sourceTree = "<group>"; };
 		7EE84FE21D785D1500BE49D1 /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40.png"; path = "LMLiveStreaming/Icons/Icon-40.png"; sourceTree = "<group>"; };
 		7EE84FE31D785D1500BE49D1 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-50.png"; path = "LMLiveStreaming/Icons/Icon-50.png"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		7EE84FE01D785C5700BE49D1 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				7E0D605C1D7922D200407707 /* Icon-167.png */,
 				7EE84FE11D785D1500BE49D1 /* Icon-29.png */,
 				7EE84FE21D785D1500BE49D1 /* Icon-40.png */,
 				7EE84FE31D785D1500BE49D1 /* Icon-50.png */,
@@ -318,6 +321,7 @@
 				7EE84FF91D785D1500BE49D1 /* Icon-100.png in Resources */,
 				7EE84FF81D785D1500BE49D1 /* Icon-87.png in Resources */,
 				7EE84FFC1D785D1500BE49D1 /* Icon-144.png in Resources */,
+				7E0D605D1D7922D200407707 /* Icon-167.png in Resources */,
 				7EE84FFB1D785D1500BE49D1 /* Icon-120.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,6 +506,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 24QRT43Q7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LMLiveStreaming/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -518,6 +523,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 24QRT43Q7U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LMLiveStreaming/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
